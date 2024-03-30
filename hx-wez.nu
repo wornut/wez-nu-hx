@@ -52,25 +52,10 @@ def "main lazygit" [] {
   }
 }
 
-def "main fzf" [selected_file: string] {
-  let pane_direct = "up"
-  let top_pane_id = wez_draw_pane --direct $pane_direct
+def "main fzf" [] {
+  let pane_id = draw_wez_pane_down
 
-  if ($selected_file | is-empty) {
-    exit 0
-  }
-
-  wezterm cli activate-pane-direction --pane-id $top_pane_id $pane_direct
-
-  let command = {
-    if (wez_list | where title =~ "hx" | is-not-empty) {
-      $":open ($selected_file)\r\n"
-    } else {
-      $"hx ($selected_file)\r\n"
-    }
-  }
-
-  echo $command | wez_pane_cmd --id $top_pane_id
+  sleep 500ms | echo "hx-fzf.nu\r\n" | wez_pane_cmd --id $pane_id
 }
 
 def main [] {}
