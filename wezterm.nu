@@ -2,6 +2,12 @@ export def helix_status_line [] {
   wezterm cli get-text | split row -r '\n' | reverse | where ($it | str trim) != "" | get 0 | str trim | parse --regex '^(?<mode>\S+)\s+(?<filename>\S+).* (?<pos>\d+:\d+)'
 }
 
+export def helix_normal_mode [
+  --id: int
+] {
+  echo $'(ansi escape)' | wez_pane_cmd --id $id
+}
+
 export def wez_list [] {
   wezterm cli list | lines | skip 1 | parse --regex '(?<winid>\d+)\s+(?<tabid>\d+)\s+(?<paneid>\d+)\s+(?<workspace>\w+)\s+(?<size>\d+x\d+)\s+(?<title>\w+)'
 }
